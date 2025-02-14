@@ -6,7 +6,6 @@ from services.background_updater import model_updater
 
 app = Flask(__name__)
 
-# Start background model updater
 model_updater.start()
 
 @app.route("/recommend", methods=["GET"])
@@ -26,11 +25,11 @@ def recommend():
 def force_retrain():
     """Manually retrain the model."""
     print("🔄 Manually retraining model...")
-    model_updater._update_model_loop()  # Force retrain immediately
+    model_updater._update_model_loop() 
     return jsonify({"message": "Model retrained successfully!"})
 
 if __name__ == "__main__":
     try:
-        app.run(host="0.0.0.0", port=5000, debug=True)
+        app.run(debug=True)
     except KeyboardInterrupt:
-        model_updater.stop()  # Stop background thread on exit
+        model_updater.stop() 
