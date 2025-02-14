@@ -1,0 +1,36 @@
+# app.py
+
+from flask import Flask, request, jsonify
+from services.recommender import recommend_books
+from services.background_updater import model_updater
+
+app = Flask(__name__)
+
+# Start background model updater
+model_updater.start()
+
+@app.route("/recommend", methods=["GET"])
+def recommend():
+    """API to get book recommendations for a user."""
+    if model_updater.ratings_matrix is None or model_updater.user_similarity is None:
+        return jsonify({"error": "Recommendation model not trained yet!"}), 500
+
+    try:
+        user_id = int(request.args.get("user_id"))
+        recommendations = recommend_books(user_id, model_updater.ratings_matrix, model_updater.user_similarity)
+        return jsonify({"user_id": user_id, "recommended_books": recommendations.index.tolist()})
+    except Exception as e:
+        return jsonify({"error": str(e)}), 400
+
+@app.route("/force_retrain", methods=["POST"])
+def force_retrain():
+    """Manually retrain the model."""
+    print("🔄 Manually retraining model...")
+    model_updater._update_model_loop()  # Force retrain immediately
+    return jsonify({"message": "Model retrained successfully!"})
+
+if __name__ == "__main__":
+    try:
+        app.run(host="0.0.0.0", port=5000, debug=True)
+    except KeyboardInterrupt:
+        model_updater.stop()  # Stop background thread on exit
