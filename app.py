@@ -28,8 +28,3 @@ def force_retrain():
     model_updater._update_model_loop() 
     return jsonify({"message": "Model retrained successfully!"})
 
-if __name__ == "__main__":
-    try:
-        app.run(debug=True)
-    except KeyboardInterrupt:
-        model_updater.stop() 
