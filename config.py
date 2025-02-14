@@ -1,12 +1,9 @@
-# config.py
+SPRING_BOOT_API_URL = "https://online-bookstore-rrd8.onrender.com/api/user-activity"
 
-SPRING_BOOT_API_URL = "http://localhost:8080/api/user-activity"
-
-# Map action types to numerical ratings
 ACTION_TYPE_RATING = {
-    "VIEW": 1,  # Lower weight
-    "RENT": 3,  # Medium weight
-    "BUY": 5    # Higher weight
+    "VIEW": 1,  
+    "RENT": 3, 
+    "BUY": 5   
 }
 
 TOP_N_RECOMMENDATIONS = 5
