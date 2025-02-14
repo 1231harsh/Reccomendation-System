@@ -8,6 +8,11 @@ app = Flask(__name__)
 
 model_updater.start()
 
+@app.route("/")
+def home():
+    return "Book Recommendation API is running!"
+
+
 @app.route("/recommend", methods=["GET"])
 def recommend():
     """API to get book recommendations for a user."""
