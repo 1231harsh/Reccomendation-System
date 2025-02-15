@@ -9,8 +9,9 @@ def process_data(df):
         
     df = df.dropna(subset=["user", "book"])
     
-    df["user.id"] = df["user"].apply(lambda x: x["id"])
-    df["book.id"] = df["book"].apply(lambda x: x["id"])
+    df.loc[:, "user.id"] = df["user"].apply(lambda x: x["id"] if isinstance(x, dict) else None)
+    df.loc[:, "book.id"] = df["book"].apply(lambda x: x["id"] if isinstance(x, dict) else None)
+
     
     df = df.dropna(subset=["user.id", "book.id"])
     
@@ -18,4 +19,6 @@ def process_data(df):
 
     df = df[["user.id", "book.id", "rating"]]
     df.columns = ["user_id", "book_id", "rating"] 
+
+    df = df.groupby(["user_id", "book_id"], as_index=False).agg({"rating": "mean"})
     return df
