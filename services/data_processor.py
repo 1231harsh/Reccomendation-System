@@ -20,7 +20,7 @@ def process_data(df):
 
     df["rating"] = df["actionType"].map(ACTION_TYPE_RATING).fillna(1)
 
-    df = df[["user.id", "book.id", "rating"]].copy()
+    df = df[["user_id", "book_id", "rating"]].copy()
     df.columns = ["user_id", "book_id", "rating"] 
 
     df = df.groupby(["user_id", "book_id"], as_index=False).agg({"rating": "mean"}).copy()
