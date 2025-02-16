@@ -9,7 +9,12 @@ def fetch_user_activity():
         response = requests.get(SPRING_BOOT_API_URL)
         response.raise_for_status()
         data = response.json()
-        return pd.DataFrame(data)  
+
+        print(f"📡 Raw API Response: {data}") 
+        df = pd.DataFrame(data)
+        print(f"📊 DataFrame Preview:\n{df.head()}") 
+        
+        return df
     except Exception as e:
         print(f"❌ Error fetching user activity: {e}")
         return pd.DataFrame() 
