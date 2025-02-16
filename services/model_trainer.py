@@ -15,8 +15,8 @@ def train_recommendation_model(df):
     print(f"📊 Ratings Matrix Shape: {ratings_matrix.shape}")  # ✅ Debug shape
 
     if ratings_matrix.shape[0] < 2:
-    print("⚠️ Not enough users for similarity calculations!")
-    return None, None  
+        print("⚠️ Not enough users for similarity calculations!")
+        return None, None  
 
     user_similarity = cosine_similarity(ratings_matrix)
     print(f"📊 User Similarity Matrix Shape: {user_similarity.shape}")
