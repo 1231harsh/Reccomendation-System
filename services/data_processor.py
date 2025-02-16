@@ -7,12 +7,18 @@ def process_data(df):
     if df.empty:
         return df  
 
+    print(f"📊 Before Processing: {df.shape}")  
+
     df = df.dropna(subset=["user", "book"]).copy()
+
+    print(f"📊 After Dropping Null Users/Books: {df.shape}")
 
     df["user.id"] = df["user"].apply(lambda x: x["id"] if isinstance(x, dict) else None)
     df["book.id"] = df["book"].apply(lambda x: x["id"] if isinstance(x, dict) else None)
 
     df = df.dropna(subset=["user.id", "book.id"]).copy()
+
+    print(f"📊 After Extracting IDs: {df.shape}")
 
     df["rating"] = df["actionType"].map(ACTION_TYPE_RATING).fillna(1)
 
