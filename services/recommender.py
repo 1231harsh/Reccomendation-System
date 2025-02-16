@@ -8,6 +8,8 @@ def recommend_books(user_id, ratings_matrix, user_similarity):
     if ratings_matrix is None or user_similarity is None:
         return []
 
+    print(f"📊 Available User IDs: {list(ratings_matrix.index)}") 
+
     if user_id not in ratings_matrix.index:
         print("⚠️ User ID not found in dataset!")
         return []
