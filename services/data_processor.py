@@ -9,14 +9,12 @@ def process_data(df):
 
     print(f"📊 Before Processing: {df.shape}")  
 
-    df = df.dropna(subset=["user", "book"]).copy()
+    df = df.dropna(subset=["userId", "bookId"]).copy()
 
     print(f"📊 After Dropping Null Users/Books: {df.shape}")
 
-    df["user.id"] = df["user"].apply(lambda x: x["id"] if isinstance(x, dict) else None)
-    df["book.id"] = df["book"].apply(lambda x: x["id"] if isinstance(x, dict) else None)
-
-    df = df.dropna(subset=["user.id", "book.id"]).copy()
+    df["user_id"] = df["userId"]
+    df["book_id"] = df["bookId"]
 
     print(f"📊 After Extracting IDs: {df.shape}")
 
