@@ -4,7 +4,7 @@ import numpy as np
 from config import TOP_N_RECOMMENDATIONS
 
 def recommend_books(user_id, ratings_matrix, user_similarity):
-    """Recommend books based on user similarity."""
+    
     if ratings_matrix is None or user_similarity is None:
         return []
 
