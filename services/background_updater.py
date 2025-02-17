@@ -7,11 +7,13 @@ from services.data_processor import process_data
 from services.model_trainer import train_recommendation_model
 
 class ModelUpdater:
-    def __init__(self, update_interval=30):
+    def __init__(self, update_interval=120):
 
         self.update_interval = update_interval
         self.ratings_matrix = None
         self.user_similarity = None
+        self._stop_event = threading.Event()
+        self.lock = threading.Lock()
         self._stop_event = threading.Event()
         self.thread = threading.Thread(target=self._update_model_loop, daemon=True)
 
@@ -39,7 +41,6 @@ class ModelUpdater:
             else:
                 print("⚠️ No new data found.")
 
-            time.sleep(self.update_interval)  # Wait before checking again
+            time.sleep(self.update_interval)  
 
-# Initialize the background updater
 model_updater = ModelUpdater()
