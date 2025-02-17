@@ -15,10 +15,9 @@ def home():
 
 @app.route("/recommend", methods=["GET"])
 def recommend():
-    """API to get book recommendations for a user."""
     if model_updater.ratings_matrix is None or model_updater.user_similarity is None:
         return jsonify({"error": "Recommendation model not trained yet!"}), 500
-
+    
     try:
         user_id = int(request.args.get("user_id"))
         recommendations = recommend_books(user_id, model_updater.ratings_matrix, model_updater.user_similarity)
