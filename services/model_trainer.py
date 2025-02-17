@@ -19,6 +19,7 @@ def train_recommendation_model(df):
     #     return None, None  
 
     user_similarity = cosine_similarity(ratings_matrix)
+    user_similarity = pd.DataFrame(user_similarity, index=ratings_matrix.index, columns=ratings_matrix.index)
     print(f"📊 User Similarity Matrix Shape: {user_similarity.shape}")
 
     return ratings_matrix, user_similarity
