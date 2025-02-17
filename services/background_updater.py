@@ -8,7 +8,7 @@ from services.model_trainer import train_recommendation_model
 
 class ModelUpdater:
     def __init__(self, update_interval=30):
-        """Initialize the model updater with a given time interval (default: 30s)."""
+
         self.update_interval = update_interval
         self.ratings_matrix = None
         self.user_similarity = None
@@ -16,17 +16,17 @@ class ModelUpdater:
         self.thread = threading.Thread(target=self._update_model_loop, daemon=True)
 
     def start(self):
-        """Start the background thread for updating the model."""
+
         print("🔄 Auto-retraining enabled...")
         self.thread.start()
 
     def stop(self):
-        """Stop the background model updater."""
+
         self._stop_event.set()
         self.thread.join()
 
     def _update_model_loop(self):
-        """Continuously fetch new data and retrain the model in the background."""
+
         while not self._stop_event.is_set():
             print("📡 Checking for new data...")
             df = fetch_user_activity()
