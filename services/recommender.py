@@ -6,6 +6,7 @@ from config import TOP_N_RECOMMENDATIONS
 def recommend_books(user_id, ratings_matrix, user_similarity):
     
     if ratings_matrix is None or user_similarity is None:
+        print("⚠️ Not enough data to make recommendations.")
         return []
 
     print(f"📊 Available User IDs: {list(ratings_matrix.index)}") 
