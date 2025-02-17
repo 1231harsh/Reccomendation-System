@@ -1,5 +1,5 @@
 # services/model_trainer.py
-
+import pickle
 import pandas as pd
 import numpy as np
 from sklearn.metrics.pairwise import cosine_similarity
@@ -22,4 +22,23 @@ def train_recommendation_model(df):
     user_similarity = pd.DataFrame(user_similarity, index=ratings_matrix.index, columns=ratings_matrix.index)
     print(f"📊 User Similarity Matrix Shape: {user_similarity.shape}")
 
+    save_model(ratings_matrix, user_similarity)
+
     return ratings_matrix, user_similarity
+
+    def save_model(ratings_matrix, user_similarity):
+        
+    with open("model.pkl", "wb") as f:
+        pickle.dump((ratings_matrix, user_similarity), f)
+    print("✅ Model saved successfully!")
+
+    def load_model():
+
+    try:
+        with open("model.pkl", "rb") as f:
+            ratings_matrix, user_similarity = pickle.load(f)
+            return ratings_matrix, user_similarity
+    except FileNotFoundError:
+        print("⚠️ Model not found. Please train the model.")
+        return None, None
+
